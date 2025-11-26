@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Neon Browser - Navegador moderno com design futurista e IA integrada">
+    <meta name="theme-color" content="#b026ff">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../assets/logo.svg">
+    
+    <title>Neon Browser</title>
+    
+    <!-- Estilos inline para web -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-purple: #b026ff;
+            --neon-blue: #00d4ff;
+            --neon-pink: #ff006e;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* PWA Install Banner */
+        .pwa-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            padding: 20px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10000;
+            animation: slideUp 0.5s ease;
+        }
+
+        .pwa-banner.show {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .pwa-banner-content {
+            flex: 1;
+        }
+
+        .pwa-banner-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .pwa-banner-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .pwa-banner-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pwa-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .pwa-btn-install {
+            background: #fff;
+            color: var(--neon-purple);
+        }
+
+        .pwa-btn-close {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            filter: drop-shadow(0 0 30px rgba(176, 38, 255, 0.8));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .title {
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Botões de Ação */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(176, 38, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(176, 38, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(176, 38, 255, 0.1);
+            border: 2px solid var(--neon-purple);
+            color: var(--neon-purple);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(176, 38, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(176, 38, 255, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 8px 30px rgba(176, 38, 255, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--neon-purple);
+        }
+
+        .feature-description {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* Instruções PWA */
+        .pwa-instructions {
+            background: rgba(176, 38, 255, 0.1);
+            border: 2px solid var(--neon-purple);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .pwa-instructions h2 {
+            font-size: 32px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pwa-steps {
+            display: grid;
+            gap: 20px;
+        }
+
+        .pwa-step {
+            display: flex;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            margin-bottom: 60px;
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .screenshot {
+            border: 2px solid rgba(176, 38, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: rgba(20, 20, 20, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(176, 38, 255, 0.3);
+            margin-top: 60px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: var(--neon-purple);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-blue);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .pwa-banner {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .pwa-banner-buttons {
+                width: 100%;
+            }
+
+            .pwa-btn {
+                flex: 1;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(176, 38, 255, 0.3);
+            border-top-color: var(--neon-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- PWA Install Banner -->
+    <div class="pwa-banner" id="pwa-banner">
+        <div class="pwa-banner-content">
+            <div class="pwa-banner-title">📱 Instale o Neon Browser</div>
+            <div class="pwa-banner-text">Adicione à tela inicial para melhor experiência!</div>
+        </div>
+        <div class="pwa-banner-buttons">
+            <button class="pwa-btn pwa-btn-install" id="install-btn">Instalar</button>
+            <button class="pwa-btn pwa-btn-close" id="close-banner">Agora não</button>
+        </div>
+    </div>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <img src="../assets/logo.svg" alt="Neon Browser" class="logo">
+            <h1 class="title">Neon Browser</h1>
+            <p class="subtitle">Navegador moderno com design futurista e IA integrada 🚀</p>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="launch-app">🚀 Abrir Navegador</button>
+                <a href="https://github.com/SEU-USUARIO/neon-browser" class="btn btn-secondary" target="_blank">⭐ GitHub</a>
+            </div>
+        </header>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Design Neon</h3>
+                <p class="feature-description">Interface futurista com gradientes roxo, azul e rosa que impressionam</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">PixelIA</h3>
+                <p class="feature-description">Assistente de IA integrado para ajudar em tudo que você precisa</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Dev Tools</h3>
+                <p class="feature-description">Console melhorado e extensões para desenvolvedores</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">Histórico</h3>
+                <p class="feature-description">Organize e busque facilmente sites visitados</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🕶️</div>
+                <h3 class="feature-title">Modo Anônimo</h3>
+                <p class="feature-description">Navegação privada sem salvar histórico</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">☁️</div>
+                <h3 class="feature-title">Sincronização</h3>
+                <p class="feature-description">Suas configurações em todos os dispositivos</p>
+            </div>
+        </section>
+
+        <!-- Instruções PWA -->
+        <section class="pwa-instructions">
+            <h2>📱 Como Instalar no Celular</h2>
+            <div class="pwa-steps">
+                <div class="pwa-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Abra no Chrome</h3>
+                        <p>Acesse este site usando o Google Chrome no seu celular</p>
+                    </div>
+                </div>
+
+                <div class="pwa-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Menu do Navegador</h3>
+                        <p>Clique nos 3 pontinhos (⋮) no canto superior direito</p>
+                    </div>
+                </div>
+
+                <div class="pwa-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Adicionar à Tela Inicial</h3>
+                        <p>Selecione "Adicionar à tela inicial" ou "Instalar app"</p>
+                    </div>
+                </div>
+
+                <div class="pwa-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Pronto! 🎉</h3>
+                        <p>O ícone do Neon Browser aparecerá na sua tela inicial. Abra como um app normal!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots -->
+        <section class="screenshots">
+            <h2>✨ Capturas de Tela</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot">🏠</div>
+                <div class="screenshot">🌐</div>
+                <div class="screenshot">⚡</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">Sobre</a>
+            <a href="#" class="footer-link">Privacidade</a>
+            <a href="https://github.com/SEU-USUARIO/neon-browser" class="footer-link" target="_blank">GitHub</a>
+        </div>
+        <p style="color: #888;">Feito com 💜 usando Electron e muito café</p>
+        <p style="color: #666; font-size: 14px; margin-top: 8px;">v1.0.0</p>
+    </footer>
+
+    <!-- Script PWA -->
+    <script>
+        // Remove loading
+        window.addEventListener('load', () => {
+            document.getElementById('loading').classList.add('hidden');
+        });
+
+        // PWA Install
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwa-banner').classList.add('show');
+        });
+
+        document.getElementById('install-btn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                document.getElementById('pwa-banner').classList.remove('show');
+            }
+        });
+
+        document.getElementById('close-banner').addEventListener('click', () => {
+            document.getElementById('pwa-banner').classList.remove('show');
+        });
+
+        // Launch App
+        document.getElementById('launch-app').addEventListener('click', () => {
+            // Redireciona para a versão app
+            window.location.href = '../src/index.html';
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('SW registrado!', reg))
+                .catch(err => console.log('SW erro:', err));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b026ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff006e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="240" fill="#0a0a0a" stroke="url(#neonGradient)" stroke-width="8" filter="url(#glow)"/>
+  
+  <!-- Browser Window Shape -->
+  <rect x="100" y="140" width="312" height="232" rx="16" fill="none" stroke="url(#neonGradient)" stroke-width="6" filter="url(#glow)"/>
+  
+  <!-- Top Bar (tabs area) -->
+  <rect x="100" y="140" width="312" height="40" rx="16" fill="url(#neonGradient)" opacity="0.3"/>
+  <line x1="100" y1="180" x2="412" y2="180" stroke="url(#neonGradient)" stroke-width="3" filter="url(#glow)"/>
+  
+  <!-- Tabs -->
+  <rect x="115" y="150" width="60" height="24" rx="8" fill="url(#neonGradient)" opacity="0.6" filter="url(#glow)"/>
+  <rect x="185" y="150" width="60" height="24" rx="8" fill="none" stroke="url(#neonGradient)" stroke-width="2" opacity="0.4"/>
+  <rect x="255" y="150" width="60" height="24" rx="8" fill="none" stroke="url(#neonGradient)" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Plus icon for new tab -->
+  <circle cx="350" cy="162" r="10" fill="none" stroke="url(#neonGradient)" stroke-width="2"/>
+  <line x1="350" y1="157" x2="350" y2="167" stroke="url(#neonGradient)" stroke-width="2"/>
+  <line x1="345" y1="162" x2="355" y2="162" stroke="url(#neonGradient)" stroke-width="2"/>
+  
+  <!-- URL Bar -->
+  <rect x="115" y="200" width="282" height="36" rx="18" fill="#0a0a0a" stroke="url(#neonGradient)" stroke-width="3" filter="url(#glow)"/>
+  
+  <!-- Lock icon in URL bar -->
+  <circle cx="135" cy="218" r="6" fill="none" stroke="#00d4ff" stroke-width="2"/>
+  <rect x="132" y="218" width="6" height="8" rx="1" fill="none" stroke="#00d4ff" stroke-width="2"/>
+  
+  <!-- Lightning bolt (AI symbol) -->
+  <path d="M 256 260 L 246 290 L 256 290 L 250 320 L 266 285 L 256 285 Z" fill="url(#neonGradient)" filter="url(#glow)"/>
+  
+  <!-- Sparkles around lightning -->
+  <circle cx="235" cy="270" r="3" fill="#b026ff" filter="url(#glow)"/>
+  <circle cx="277" cy="275" r="2.5" fill="#00d4ff" filter="url(#glow)"/>
+  <circle cx="245" cy="310" r="2" fill="#ff006e" filter="url(#glow)"/>
+  <circle cx="268" cy="265" r="2" fill="#00d4ff" filter="url(#glow)"/>
+  
+  <!-- Bottom accent lines -->
+  <path d="M 120 340 Q 180 330 240 335 T 360 340" fill="none" stroke="url(#neonGradient)" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+  <path d="M 130 355 Q 190 348 250 352 T 370 355" fill="none" stroke="url(#neonGradient)" stroke-width="2" opacity="0.4" filter="url(#glow)"/>
+</svg>

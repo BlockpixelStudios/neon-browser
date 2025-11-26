@@ -1,15 +1,23 @@
 {
   "name": "neon-browser",
   "version": "1.0.0",
-  "description": "Navegador moderno com IA integrada e funcionalidades avançadas",
+  "description": "Navegador moderno com design neon e IA integrada",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-  d": "electron-builder"
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "dev": "electron . --dev"
   },
-  "keywords": ["browser", "electron", "neon", "ai"],
+  "keywords": ["browser", "electron", "neon", "ai", "pixelia"],
   "author": "Seu Nome",
   "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1"
@@ -20,17 +28,30 @@
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
     "win": {
-      "target": "nsis",
+      "target": ["nsis", "portable"],
       "icon": "assets/icon.ico"
     },
     "mac": {
-      "target": "dmg",
-      "icon": "assets/icon.icns"
+      "target": ["dmg", "zip"],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.productivity"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "assets/icon.png"
+      "target": ["AppImage", "deb", "rpm"],
+      "icon": "assets/icon.png",
+      "category": "Network"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }

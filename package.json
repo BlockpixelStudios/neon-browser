@@ -2,10 +2,10 @@
   "name": "neon-browser",
   "version": "1.0.0",
   "description": "Navegador moderno com IA integrada e funcionalidades avançadas",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+  d": "electron-builder"
   },
   "keywords": ["browser", "electron", "neon", "ai"],
   "author": "Seu Nome",

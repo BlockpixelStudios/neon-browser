@@ -1,0 +1,32 @@
+{
+  "name": "Neon Browser",
+  "short_name": "Neon",
+  "description": "Navegador moderno com design futurista e IA integrada",
+  "start_url": "/app.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#b026ff",
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "web"],
+  "shortcuts": [
+    {
+      "name": "Nova Aba",
+      "url": "/app.html?action=new-tab",
+      "icons": [{ "src": "/assets/logo.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Modo Anônimo",
+      "url": "/app.html?action=incognito",
+      "icons": [{ "src": "/assets/logo.svg", "sizes": "96x96" }]
+    }
+  ]
+}

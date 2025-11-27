@@ -19,12 +19,180 @@
         
         <nav class="sidebar-nav">
             <button class="sidebar-item active" data-page="home">
-                <span>🏠</span> Home
+                <span>🏠</span> <span>Home</span>
             </button>
             <button class="sidebar-item" data-page="browser">
-                <span>🌐</span> Navegador
+                <span>🌐</span> <span>Navegador</span>
             </button>
             <button class="sidebar-item" data-page="history">
-                <span>📚</span> Histórico
+                <span>📚</span> <span>Histórico</span>
             </button>
-            <button class="sidebar-item" data-page="dev
+            <button class="sidebar-item" data-page="dev">
+                <span>⚡</span> <span>Dev Tools</span>
+            </button>
+            <button class="sidebar-item" data-page="ai">
+                <span>🤖</span> <span>PixelIA</span>
+            </button>
+            <button class="sidebar-item" data-page="settings">
+                <span>⚙️</span> <span>Config</span>
+            </button>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button class="sidebar-item" id="incognito-btn">
+                <span>🕶️</span> <span>Anônimo</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- HOME PAGE -->
+        <div class="page active" id="page-home">
+            <div class="home-hero">
+                <h1 class="home-title">Bem-vindo ao Neon Browser</h1>
+                <p class="home-subtitle">Seu navegador futurista 🚀</p>
+                
+                <div class="home-search">
+                    <input type="text" id="home-search-input" placeholder="Pesquise ou digite uma URL...">
+                    <button id="home-search-btn">→</button>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="quick-btn" data-action="browser">
+                        <div>🌐</div>
+                        <span>Navegar</span>
+                    </button>
+                    <button class="quick-btn" data-action="ai">
+                        <div>🤖</div>
+                        <span>PixelIA</span>
+                    </button>
+                    <button class="quick-btn" data-action="dev">
+                        <div>⚡</div>
+                        <span>Dev Tools</span>
+                    </button>
+                    <button class="quick-btn" data-action="history">
+                        <div>📚</div>
+                        <span>Histórico</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <h3>⭐ Sites Recentes</h3>
+                <div id="recent-sites" class="sites-grid">
+                    <div class="site-card">
+                        <div class="site-icon">🌐</div>
+                        <div class="site-name">Nenhum site ainda</div>
+                        <div class="site-url">Comece a navegar!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BROWSER PAGE -->
+        <div class="page" id="page-browser">
+            <div class="browser-bar">
+                <button class="nav-btn" id="back-btn" title="Voltar">←</button>
+                <button class="nav-btn" id="forward-btn" title="Avançar">→</button>
+                <button class="nav-btn" id="reload-btn" title="Recarregar">↻</button>
+                <button class="nav-btn" id="home-btn" title="Home">🏠</button>
+                <input type="text" id="url-bar" placeholder="Digite uma URL ou pesquise...">
+                <button class="nav-btn" id="go-btn">→</button>
+            </div>
+            <iframe id="browser-frame" class="browser-frame" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        </div>
+
+        <!-- HISTORY PAGE -->
+        <div class="page" id="page-history">
+            <div class="page-header-section">
+                <h2>📚 Histórico de Navegação</h2>
+                <button class="btn btn-danger" id="clear-history-btn">🗑️ Limpar Tudo</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <p class="empty-state">Nenhum histórico ainda. Comece a navegar!</p>
+            </div>
+        </div>
+
+        <!-- DEV TOOLS PAGE -->
+        <div class="page" id="page-dev">
+            <div class="page-header-section">
+                <h2>⚡ Ferramentas de Desenvolvedor</h2>
+                <button class="btn btn-secondary" id="clear-console-btn">🧹 Limpar Console</button>
+            </div>
+            <div class="console">
+                <div class="console-tabs">
+                    <button class="console-tab active" data-filter="all">Todos</button>
+                    <button class="console-tab" data-filter="log">Logs</button>
+                    <button class="console-tab" data-filter="error">Erros</button>
+                    <button class="console-tab" data-filter="warning">Avisos</button>
+                </div>
+                <div class="console-output" id="console-output">
+                    <div style="color: #888; padding: 20px; text-align: center;">
+                        Console do Desenvolvedor<br>
+                        Digite comandos abaixo 👇
+                    </div>
+                </div>
+                <div class="console-input-area">
+                    <span>&gt;</span>
+                    <input type="text" id="console-input" placeholder="Digite um comando JavaScript...">
+                </div>
+            </div>
+        </div>
+
+        <!-- AI PAGE -->
+        <div class="page" id="page-ai">
+            <div class="page-header-section">
+                <h2>🤖 PixelIA Assistente</h2>
+                <p style="color: #888; margin-top: 8px;">Sua IA integrada ao navegador</p>
+            </div>
+            <iframe src="https://thepixelia.vercel.app/" class="ai-frame" title="PixelIA"></iframe>
+        </div>
+
+        <!-- SETTINGS PAGE -->
+        <div class="page" id="page-settings">
+            <div class="page-header-section">
+                <h2>⚙️ Configurações</h2>
+            </div>
+            
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>🎨 Aparência</h3>
+                    <label>
+                        <span>Tema</span>
+                        <select id="theme-select">
+                            <option value="dark">🌙 Escuro (Neon)</option>
+                            <option value="light">☀️ Claro</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="settings-section">
+                    <h3>🔒 Privacidade</h3>
+                    <div class="settings-buttons">
+                        <button class="btn btn-danger" id="clear-data-btn">Limpar Dados</button>
+                        <button class="btn btn-danger" id="clear-history-settings-btn">Limpar Histórico</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>ℹ️ Sobre</h3>
+                    <div class="about-info">
+                        <img src="/assets/logo.svg" alt="Neon" style="width: 80px; height: 80px; margin-bottom: 16px;" onerror="this.style.display='none'">
+                        <h4>Neon Browser</h4>
+                        <p>Versão 1.0.0 - PWA Edition</p>
+                        <p style="color: #888; margin-top: 8px;">Navegador moderno com design futurista</p>
+                        <div class="about-links">
+                            <a href="https://github.com/SEU-USUARIO/neon-browser" target="_blank" class="btn btn-secondary" style="margin-top: 16px;">⭐ GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+                        </html>

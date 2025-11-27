@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Neon Browser - Navegador moderno com design futurista e IA integrada">
+    <meta name="theme-color" content="#b026ff">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+    <link rel="apple-touch-icon" href="/assets/logo.svg">
+    
+    <title>Neon Browser - Navegador Futurista</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- PWA Install Banner -->
+    <div class="pwa-banner" id="pwa-banner">
+        <div class="pwa-content">
+            <div class="pwa-icon">📱</div>
+            <div class="pwa-text">
+                <strong>Instale o Neon Browser</strong>
+                <p>Adicione à tela inicial para melhor experiência!</p>
+            </div>
+        </div>
+        <div class="pwa-buttons">
+            <button class="btn-install" id="install-btn">Instalar</button>
+            <button class="btn-close" id="close-banner">×</button>
+        </div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <img src="/assets/logo.svg" alt="Neon Browser" class="logo" onerror="this.style.display='none'">
+            <h1 class="title">Neon Browser</h1>
+            <p class="subtitle">Navegador moderno com design futurista e IA integrada 🚀</p>
+            
+            <div class="cta-buttons">
+                <a href="/app.html" class="btn btn-primary">🚀 Abrir Navegador</a>
+                <a href="https://github.com/SEU-USUARIO/neon-browser" class="btn btn-secondary" target="_blank">⭐ Ver no GitHub</a>
+            </div>
+        </header>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3>Design Neon</h3>
+                <p>Interface futurista com gradientes que impressionam</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>PixelIA</h3>
+                <p>Assistente de IA integrado</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Dev Tools</h3>
+                <p>Console melhorado para desenvolvedores</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <h3>Histórico</h3>
+                <p>Organize seus sites visitados</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🕶️</div>
+                <h3>Modo Anônimo</h3>
+                <p>Navegação privada</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">☁️</div>
+                <h3>Sincronização</h3>
+                <p>Dados em todos dispositivos</p>
+            </div>
+        </section>
+
+        <!-- Como Instalar -->
+        <section class="install-guide">
+            <h2>📱 Como Instalar no Celular</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Abra no Chrome</h4>
+                        <p>Use o Google Chrome no seu celular</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Menu (⋮)</h4>
+                        <p>Clique nos 3 pontinhos no canto</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Adicionar à Tela Inicial</h4>
+                        <p>Selecione essa opção</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Pronto! 🎉</h4>
+                        <p>Use como um app normal</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Feito com 💜 • v1.0.0</p>
+            <div class="footer-links">
+                <a href="https://github.com/SEU-USUARIO/neon-browser" target="_blank">GitHub</a>
+                <a href="#">Privacidade</a>
+                <a href="#">Sobre</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Remove loading
+        window.addEventListener('load', () => {
+            document.getElementById('loading').classList.add('hidden');
+        });
+
+        // PWA Install
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwa-banner').style.display = 'flex';
+        });
+
+        document.getElementById('install-btn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                document.getElementById('pwa-banner').style.display = 'none';
+            }
+        });
+
+        document.getElementById('close-banner').addEventListener('click', () => {
+            document.getElementById('pwa-banner').style.display = 'none';
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('✅ SW registrado'))
+                .catch(err => console.log('❌ SW erro:', err));
+        }
+    </script>
+</body>
+  </html>
